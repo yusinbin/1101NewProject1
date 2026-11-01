@@ -533,7 +533,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # Comment config
     # 评论系统设置
     [params.page.comment]
-      enable = true
+      enable = false
       # Disqus comment config (https://disqus.com/)
       # Disqus 评论系统设置 (https://disqus.com/)
       [params.page.comment.disqus]
@@ -553,8 +553,8 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       # Valine 评论系统设置 (https://github.com/xCss/Valine)
       [params.page.comment.valine]
         enable = true
-        appId = "QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI"
-        appKey = "WBmoGyJtbqUswvfLh6L8iEBr"
+        appId = ""
+        appKey = ""
         placeholder = ""
         avatar = "mp"
         meta= ""
@@ -566,7 +566,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         recordIP = true
         highlight = true
         enableQQ = false
-        serverURLs = "https://valine.hugoloveit.com"
+        serverURLs = ""
         # emoji data file name, default is "google.yml"
         # ["apple.yml", "google.yml", "facebook.yml", "twitter.yml"]
         # located in "themes/LoveIt/assets/lib/valine/emoji/" directory
