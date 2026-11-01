@@ -859,7 +859,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         identifier = "posts"
         pre = ""
         post = ""
-        name = "Posts"
+        name = "글"
         url = "/posts/"
         title = ""
       [[languages.ko.menu.main]]
@@ -867,7 +867,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         identifier = "tags"
         pre = ""
         post = ""
-        name = "Tags"
+        name = "태그"
         url = "/tags/"
         title = ""
       [[languages.ko.menu.main]]
@@ -875,23 +875,15 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         identifier = "categories"
         pre = ""
         post = ""
-        name = "Categories"
+        name = "분류"
         url = "/categories/"
-        title = ""
-      [[languages.ko.menu.main]]
-        weight = 4
-        identifier = "documentation"
-        pre = ""
-        post = ""
-        name = "Docs"
-        url = "/categories/documentation/"
         title = ""
       [[languages.ko.menu.main]]
         weight = 5
         identifier = "about"
         pre = ""
         post = ""
-        name = "About"
+        name = "소개"
         url = "/about/"
         title = ""
       [[languages.ko.menu.main]]
@@ -900,8 +892,8 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         pre = "<i class='fab fa-github' aria-hidden='true'></i>"
         post = ""
         name = ""
-        url = "https://github.com/dillonzq/LoveIt"
-        title = "GitHub"
+        url = "https://github.com/yusinbin"
+        title = "GitHub (yusinbin)"
     [languages.ko.params]
       [languages.ko.params.search]
         enable = true
