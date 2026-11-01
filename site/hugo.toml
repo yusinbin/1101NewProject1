@@ -912,9 +912,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         [languages.ko.params.home.profile]
           enable = true
           gravatarEmail = ""
-          avatarURL = "/images/avatar.png"
-          title = ""
-          subtitle = "A Clean, Elegant but Advanced Hugo Theme"
+          avatarURL = ""
+          title = "빈유신"
+          subtitle = "컴퓨터인공지능학부에 재학 중인 학생입니다."
           typeit = true
           social = true
           disclaimer = ""
