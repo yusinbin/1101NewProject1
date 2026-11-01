@@ -1,0 +1,37 @@
+# Hugo default output directory
+public/
+/resources/
+/exampleSite/resources/
+.hugo_build.lock
+**/assets/jsconfig.json
+
+node_modules/
+build/
+test-results/
+playwright-report/
+
+## OS Files
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OSX
+.DS_Store
+
+# Linux
+.directory
+
+# Prepared Hugo Pages site
+!/site/
+!/site/**
+!/.github/
+!/.github/**
+!/.github-pages.json
+/public/
+/.pages-tools/
+**/node_modules/
+**/resources/_gen/
+**/.hugo_build.lock
+/.github-pages-setup-backups/

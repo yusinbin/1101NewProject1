@@ -1,0 +1,25 @@
+enableGitInfo = false
+
+[params.cdn]
+data = ""
+[params.cookieconsent]
+enable = false
+[params.analytics.google]
+id = ""
+[params.page]
+hiddenFromSearch = true
+[params.page.comment]
+enable = false
+[params.page.math]
+enable = true
+inlineLeftDelimiter = "(("
+inlineRightDelimiter = "))"
+[params.search.algolia]
+appID = "test"
+searchKey = "test"
+index = "posts"
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [["\\[", "\\]"], ["$$", "$$"]]
+inline = [["\\(", "\\)"]]

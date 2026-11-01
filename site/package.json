@@ -1,0 +1,45 @@
+{
+  "name": "loveit-src",
+  "version": "1.0.0",
+  "description": "LoveIt theme source file",
+  "private": true,
+  "devDependencies": {
+    "segmentit": "^2.0.3",
+    "sass-embedded": "1.106.1",
+    "pagefind": "1.5.2",
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2"
+  },
+  "scripts": {
+    "compile-lunr-segmentit": "node scripts/compile-lunr.mjs",
+    "hugo": "node scripts/hugo.mjs build --buildDrafts --gc",
+    "hugo-development": "node scripts/hugo.mjs build --buildDrafts --gc --minify --environment development",
+    "hugo-production": "node scripts/hugo.mjs build --gc --minify --environment production",
+    "hugo-server": "node scripts/hugo.mjs server --buildDrafts --disableFastRender",
+    "hugo-server-development": "node scripts/hugo.mjs server --buildDrafts --disableFastRender --environment development",
+    "hugo-server-production": "node scripts/hugo.mjs server --minify --disableFastRender --environment production",
+    "htmlproofer": "bundle exec htmlproofer exampleSite/public --disable-external --ignore-missing-alt --no-enforce-https",
+    "build": "node scripts/hugo.mjs build --gc --minify --environment production --panicOnWarning",
+    "dev": "node scripts/hugo.mjs server --buildDrafts --disableFastRender --environment development",
+    "hugo:version": "node scripts/hugo.mjs version",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dillonzq/LoveIt.git"
+  },
+  "keywords": [
+    "hugo",
+    "theme"
+  ],
+  "author": "Dillon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dillonzq/LoveIt/issues"
+  },
+  "homepage": "https://github.com/dillonzq/LoveIt#readme",
+  "engines": {
+    "node": ">=24"
+  }
+}
