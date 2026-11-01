@@ -1,4 +1,4 @@
-{{- /* 테마 home.html 덮어쓰기: 프로필 + 활동 카드 그리드 */ -}}
+{{- /* 테마 home.html 덮어쓰기: 프로필 + 활동 카드 그리드 + 활동 추가(+) 카드 */ -}}
 {{- define "content" -}}
     {{- $profile := .Site.Params.home.profile -}}
     {{- $posts := .Site.Params.home.posts -}}
@@ -13,6 +13,18 @@
             <ul class="activity-grid">
                 {{- range where .Site.RegularPages "Type" "posts" -}}
                     <li>{{ partial "activity-card.html" . }}</li>
+                {{- end -}}
+                {{- with .Site.Params.gitRepo -}}
+                    {{- $query := querify "filename" "new-activity/index.md" "value" (partial "activity-new-template.html" $) -}}
+                    {{- $url := printf "%s/new/main/site/content/posts?%s" . $query -}}
+                    <li>
+                        <a class="activity-card activity-add" href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                           title="새 활동 추가 (관리자용, GitHub 편집기가 새 탭에서 열림)">
+                            <span class="activity-add-icon" aria-hidden="true">+</span>
+                            <span class="activity-add-label">활동 추가</span>
+                            <span class="activity-add-note">관리자용 · GitHub에서 작성 후 자동 배포</span>
+                        </a>
+                    </li>
                 {{- end -}}
             </ul>
         </section>
