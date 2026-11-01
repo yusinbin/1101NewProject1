@@ -859,24 +859,8 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         identifier = "posts"
         pre = ""
         post = ""
-        name = "글"
+        name = "활동"
         url = "/posts/"
-        title = ""
-      [[languages.ko.menu.main]]
-        weight = 2
-        identifier = "tags"
-        pre = ""
-        post = ""
-        name = "태그"
-        url = "/tags/"
-        title = ""
-      [[languages.ko.menu.main]]
-        weight = 3
-        identifier = "categories"
-        pre = ""
-        post = ""
-        name = "분류"
-        url = "/categories/"
         title = ""
       [[languages.ko.menu.main]]
         weight = 5
