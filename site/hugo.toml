@@ -666,8 +666,8 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       # Publisher info
       # 出版者信息
       [params.page.seo.publisher]
-        name = "xxxx"
-        logoUrl = "/images/avatar.png"
+        name = "빈유신"
+        logoUrl = ""
 
   # TypeIt config
   # TypeIt 配置
