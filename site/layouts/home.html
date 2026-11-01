@@ -1,0 +1,20 @@
+{{- /* 테마 home.html 덮어쓰기: 프로필 + 활동 카드 그리드 */ -}}
+{{- define "content" -}}
+    {{- $profile := .Site.Params.home.profile -}}
+    {{- $posts := .Site.Params.home.posts -}}
+
+    <div class="page home" data-home="posts">
+        {{- if ne $profile.enable false -}}
+            {{- partial "home/profile.html" . -}}
+        {{- end -}}
+
+        <section class="activity-section" aria-labelledby="activity-heading">
+            <h2 class="activity-heading" id="activity-heading">대표 활동</h2>
+            <ul class="activity-grid">
+                {{- range where .Site.RegularPages "Type" "posts" -}}
+                    <li>{{ partial "activity-card.html" . }}</li>
+                {{- end -}}
+            </ul>
+        </section>
+    </div>
+{{- end -}}

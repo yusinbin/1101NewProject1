@@ -1,0 +1,18 @@
+{{- /* 홈 활동 카드 1개. 카드 전체가 상세 페이지로 가는 링크 하나 */ -}}
+{{- $image := .Params.featuredImagePreview | default .Params.featuredImage -}}
+{{- $alt := .Params.featuredImageAlt | default (printf "%s 대표 이미지" .Title) -}}
+<a class="activity-card" href="{{ .RelPermalink }}">
+    <div class="activity-thumb">
+        {{- with $image -}}
+            {{- dict "Src" . "Resources" $.Resources "Alt" $alt "Eager" true | partial "plugin/img.html" -}}
+        {{- else -}}
+            <span class="activity-thumb-text" aria-hidden="true">{{ .Title }}</span>
+        {{- end -}}
+    </div>
+    <div class="activity-body">
+        <h3 class="activity-title">{{ .Title }}</h3>
+        <span class="activity-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></span>
+        <p class="activity-summary">{{ .Summary | plainify | truncate 90 }}</p>
+        <span class="activity-more" aria-hidden="true">자세히 보기 →</span>
+    </div>
+</a>
