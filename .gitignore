@@ -35,3 +35,6 @@ $RECYCLE.BIN/
 **/resources/_gen/
 **/.hugo_build.lock
 /.github-pages-setup-backups/
+
+# 스크립트의 !/site/** 규칙 때문에 다시 포함되는 빌드 산출물 제외
+/site/assets/jsconfig.json
