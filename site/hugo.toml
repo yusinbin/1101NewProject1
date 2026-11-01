@@ -161,13 +161,13 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     author = true
     # site creation time
     # 网站创立年份
-    since = 2019
+    since = 2026
     # ICP info only in China (HTML format is supported)
     # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
     icp = ""
     # license info (HTML format is supported)
     # 许可协议信息 (支持 HTML 格式)
-    license= '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+    license= ''
 
   # Section (all posts) page config
   # Section (所有文章) 页面配置
@@ -852,7 +852,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     locale = "ko"
     label = "한국어"
     hasCJKLanguage = true
-    copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
+    copyright = "© 2026 빈유신"
     [languages.ko.menu]
       [[languages.ko.menu.main]]
         weight = 1
