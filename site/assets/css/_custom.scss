@@ -1,4 +1,189 @@
 // ==============================
-// Custom style
-// 自定义样式
+// Custom style (빈유신)
+// 홈 활동 카드 그리드 · 활동 추가 카드
+// 테마 원본 assets/css/_custom.scss를 프로젝트에서 덮어씀
 // ==============================
+
+// 홈 화면만 본문 폭을 넓혀 카드 3열이 들어가게 함
+.page.home[data-home=posts] {
+  width: 92%;
+  max-width: 1080px;
+}
+
+.activity-section {
+  margin: 2.5rem 0 3rem;
+
+  .activity-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    padding-left: .6rem;
+    border-left: 4px solid #7c3aed;
+  }
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > li {
+    display: flex;
+    min-width: 0;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media only screen and (max-width: 599px) {
+  .activity-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  color: #161209;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+
+  [theme=dark] & {
+    background: #1f2023;
+    border-color: #3a3b40;
+    color: #d4d4d8;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: #7c3aed;
+    box-shadow: 0 6px 18px rgba(124, 58, 237, .18);
+    color: inherit;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+  }
+
+  .activity-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #4f46e5, #db2777);
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .activity-thumb-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      padding: 0 1rem;
+      text-align: center;
+    }
+  }
+
+  .activity-body {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    padding: .9rem 1rem 1rem;
+    flex: 1;
+  }
+
+  .activity-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .activity-meta {
+    font-size: .8rem;
+    color: #6b7280;
+
+    [theme=dark] & { color: #9ca3af; }
+  }
+
+  .activity-summary {
+    font-size: .9rem;
+    line-height: 1.6;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .activity-more {
+    margin-top: auto;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #6d28d9;
+
+    [theme=dark] & { color: #a78bfa; }
+  }
+}
+
+// 활동 추가(+) 카드
+.activity-card.activity-add {
+  border-style: dashed;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: .6rem;
+  padding: 2rem 1rem;
+  min-height: 14rem;
+  background: transparent;
+
+  [theme=dark] & { background: transparent; }
+
+  .activity-add-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 3px solid currentColor;
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  .activity-add-label {
+    font-weight: 700;
+  }
+
+  .activity-add-note {
+    font-size: .8rem;
+    color: #6b7280;
+
+    [theme=dark] & { color: #9ca3af; }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .activity-card {
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+
+    &:hover { transform: translateY(-3px); }
+  }
+}
