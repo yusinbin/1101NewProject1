@@ -257,3 +257,38 @@
     &:hover { background: #5b21b6; }
   }
 }
+
+// ==============================
+// 활동 카드 상태·기술 배지
+// ==============================
+.activity-card {
+  .activity-status {
+    align-self: flex-start;
+    padding: .15rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+
+    &.is-ongoing { background: #fef3c7; color: #92400e; }
+    &.is-done { background: #d1fae5; color: #065f46; }
+  }
+
+  .activity-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: .1rem .5rem;
+      border-radius: 6px;
+      background: #ede9fe;
+      color: #4c1d95;
+      font-size: .75rem;
+
+      [theme=dark] & { background: #2e1065; color: #ddd6fe; }
+    }
+  }
+}

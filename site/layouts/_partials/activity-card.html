@@ -10,9 +10,17 @@
         {{- end -}}
     </div>
     <div class="activity-body">
+        {{- with .Params.status -}}
+            <span class="activity-status{{ if eq . "완료" }} is-done{{ else }} is-ongoing{{ end }}">{{ . }}</span>
+        {{- end }}
         <h3 class="activity-title">{{ .Title }}</h3>
         <span class="activity-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></span>
         <p class="activity-summary">{{ .Summary | plainify | truncate 90 }}</p>
+        {{- with .Params.tech -}}
+            <ul class="activity-tech" aria-label="사용 기술">
+                {{- range . }}<li>{{ . }}</li>{{ end -}}
+            </ul>
+        {{- end }}
         <span class="activity-more" aria-hidden="true">자세히 보기 →</span>
     </div>
 </a>
