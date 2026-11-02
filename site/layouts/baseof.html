@@ -1,4 +1,4 @@
-{{- /* 테마 baseof.html 덮어쓰기: 본문 바로가기 링크와 main id 추가 (변경 줄에 skip-link / main-content) */ -}}
+{{- /* 테마 baseof.html 덮어쓰기: 본문 바로가기 링크와 main id 추가 (변경: skip-link, main-content, 댓글 버튼 조건부 출력) */ -}}
 {{- partial "init.html" . -}}
 
 <!DOCTYPE html>
@@ -51,12 +51,14 @@
             </a>
         </div>
 
+        {{- if .Site.Params.page.comment.enable -}}
         <div id="fixed-buttons-hidden">
             {{- /* comment button */ -}}
             <a href="#" id="view-comments" class="fixed-button" title="{{ T `viewComments` }}">
                 <i class="fas fa-comment" aria-hidden="true"></i>
             </a>
         </div>
+        {{- end -}}
 
         {{- /* Load JavaScript scripts and CSS */ -}}
         {{- partial "assets.html" . -}}
