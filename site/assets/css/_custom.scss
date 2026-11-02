@@ -187,3 +187,73 @@
     &:hover { transform: translateY(-3px); }
   }
 }
+
+// ==============================
+// 404 페이지
+// ==============================
+#content-404 {
+  @include transform(none);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 18vh 1rem 6rem;
+  text-align: center;
+
+  .error-code {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 0 0 1rem;
+    background: linear-gradient(135deg, #4f46e5, #db2777);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .error-title {
+    font-size: 1.6rem;
+    margin: 0 0 .6rem;
+  }
+
+  .error-text {
+    margin: 0 0 1.8rem;
+    color: #4b5563;
+
+    [theme=dark] & { color: #a1a1aa; }
+  }
+
+  .error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .75rem;
+  }
+
+  .error-btn {
+    display: inline-block;
+    min-width: 7.5rem;
+    padding: .65rem 1.2rem;
+    border: 2px solid #7c3aed;
+    border-radius: 999px;
+    color: #6d28d9;
+    font-weight: 700;
+    text-decoration: none;
+
+    [theme=dark] & { color: #c4b5fd; border-color: #a78bfa; }
+
+    &:hover { background: rgba(124, 58, 237, .08); }
+
+    &:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 3px;
+    }
+  }
+
+  .error-btn-primary {
+    background: #6d28d9;
+    color: #fff;
+
+    [theme=dark] & { background: #7c3aed; color: #fff; }
+
+    &:hover { background: #5b21b6; }
+  }
+}
