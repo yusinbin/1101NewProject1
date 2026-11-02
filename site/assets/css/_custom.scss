@@ -292,3 +292,30 @@
     }
   }
 }
+
+// ==============================
+// 본문 바로가기 링크: 평소엔 숨기고 키보드 초점을 받으면 왼쪽 위에 표시
+// ==============================
+.skip-link {
+  position: fixed;
+  top: .5rem;
+  left: .5rem;
+  z-index: 1000;
+  padding: .6rem 1rem;
+  border-radius: 8px;
+  background: #4c1d95;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+
+  &:focus,
+  &:focus-visible {
+    transform: none;
+    color: #fff;
+    outline: 3px solid #f59e0b;
+    outline-offset: 2px;
+  }
+}
+
+#main-content:focus { outline: none; }
