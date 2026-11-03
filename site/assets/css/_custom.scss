@@ -334,3 +334,35 @@
     [theme=dark] & { color: #a78bfa; }
   }
 }
+
+// ==============================
+// 홈 첫 화면 프로필 배경 (시안 A: 은은한 빛)
+// 라이트 모드는 옅게, 다크 모드는 진하게
+// ==============================
+.home[data-home=posts] .home-profile {
+  position: relative;
+  margin-top: 1rem;
+  padding: 3.2rem 1rem 2.4rem;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 58, 237, .15);
+  background:
+    radial-gradient(520px 260px at 18% 15%, rgba(124, 58, 237, .18), transparent 65%),
+    radial-gradient(480px 260px at 85% 35%, rgba(219, 39, 119, .14), transparent 65%),
+    radial-gradient(400px 200px at 50% 110%, rgba(79, 70, 229, .14), transparent 70%);
+
+  [theme=dark] & {
+    border-color: rgba(167, 139, 250, .18);
+    background:
+      radial-gradient(520px 260px at 18% 15%, rgba(124, 58, 237, .45), transparent 65%),
+      radial-gradient(480px 260px at 85% 35%, rgba(219, 39, 119, .35), transparent 65%),
+      radial-gradient(400px 200px at 50% 110%, rgba(79, 70, 229, .35), transparent 70%);
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .home[data-home=posts] .home-profile {
+    padding: 2.4rem .75rem 1.8rem;
+    border-radius: 20px;
+  }
+}
