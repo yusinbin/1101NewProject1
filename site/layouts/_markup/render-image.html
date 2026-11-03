@@ -1,0 +1,11 @@
+{{- /* 테마 render-image.html 덮어쓰기: 마크다운 사진 설명(![설명](파일))을 alt로 넘김. 원본은 alt에 파일 경로가 들어감 */ -}}
+{{- if .Title -}}
+    <figure>
+        {{- dict "Src" .Destination "Title" .Text "Alt" .Text "Caption" .Title "Linked" true "Resources" .Page.Resources | partial "plugin/img.html" -}}
+        <figcaption class="image-caption">
+            {{- .Title | safeHTML -}}
+        </figcaption>
+    </figure>
+{{- else -}}
+    {{- dict "Src" .Destination "Title" .Text "Alt" .Text "Resources" .Page.Resources | partial "plugin/img.html" -}}
+{{- end -}}
