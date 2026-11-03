@@ -319,3 +319,18 @@
 }
 
 #main-content:focus { outline: none; }
+
+// ==============================
+// 왼쪽 위 사이트 간판: </> 아이콘 + Portfolio
+// ==============================
+.header-title {
+  font-weight: 800;
+  letter-spacing: .02em;
+
+  .header-title-pre {
+    margin-right: .4rem;
+    color: #7c3aed;
+
+    [theme=dark] & { color: #a78bfa; }
+  }
+}
