@@ -1,0 +1,52 @@
+{{- /* 테마 원본 복사본: 파일명 해시(fingerprint) 대신 주소 뒤 ?v=내용해시 를 붙임.
+     배포 직후 브라우저에 남은 옛 HTML이 지워진 옛 해시 파일을 요청해 404로 스타일·스크립트가 빠지던 문제 수정 */ -}}
+{{- if strings.HasPrefix .Source "<link" -}}
+    {{- safeHTML .Source -}}
+{{- else -}}
+    {{- $href := .Source -}}
+    {{- $integrity := .Integrity -}}
+    {{- $resource := 0 -}}
+    {{- if $href | and (not (urls.Parse $href).Host) -}}
+        {{- $resource = resources.Get $href -}}
+        {{- with printf `%v.map` $href | resources.Get -}}
+            {{- .Publish -}}
+        {{- end -}}
+    {{- end -}}
+    {{- with .Content -}}
+        {{- $resource = resources.FromString $.Path . -}}
+    {{- end -}}
+    {{- if $resource -}}
+        {{- with .Template -}}
+            {{- $resource = $resource | resources.ExecuteAsTemplate . $.Context -}}
+        {{- end -}}
+        {{- with .ToCSS -}}
+            {{- /* Keep @import-based user overrides until the public Sass API can migrate. */ -}}
+            {{- $options := merge . (dict "transpiler" "dartsass" "silenceDeprecations" (slice "import")) -}}
+            {{- $resource = $resource | css.Sass $options -}}
+        {{- end -}}
+        {{- if .Minify -}}
+            {{- $resource = $resource | minify -}}
+        {{- end -}}
+        {{- with .Fingerprint -}}
+            {{- $resource = $resource | fingerprint . -}}
+            {{- $integrity = $resource.Data.Integrity -}}
+        {{- end -}}
+        {{- $href = printf "%s?v=%s" $resource.RelPermalink (substr (md5 $resource.Content) 0 10) -}}
+    {{- end -}}
+    {{- $attrs := printf `href="%v"` $href -}}
+    {{- if .Crossorigin -}}
+        {{- $attrs = ` crossorigin="anonymous"` | add $attrs -}}
+    {{- end -}}
+    {{- with $integrity -}}
+        {{- $attrs = printf ` integrity="%v"` . | add $attrs -}}
+    {{- end -}}
+    {{- with .Attr -}}
+        {{- $attrs = add " " . | add $attrs -}}
+    {{- end -}}
+    {{- if .Preload -}}
+        <link rel="preload" {{ $attrs | safeHTMLAttr }} as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" {{ $attrs | safeHTMLAttr }}></noscript>
+    {{- else -}}
+        <link rel="stylesheet" {{ $attrs | safeHTMLAttr }}>
+    {{- end -}}
+{{- end -}}
