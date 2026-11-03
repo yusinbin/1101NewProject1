@@ -899,6 +899,8 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
           avatarURL = "/images/avatar.svg"
           title = "빈유신"
           subtitle = "컴퓨터인공지능학부에 재학 중인 학생입니다."
+          extra = '<span lang="en">A Computer Science &amp; AI student interested in security, networking, and big data management.</span>'
+          extraItalic = true
           typeit = true
           social = true
           disclaimer = ""
