@@ -1,4 +1,4 @@
-{{- /* 테마 원본(themes/template/layouts/_partials/home/profile.html) 복사본: 아바타 alt가 파일 경로로 들어가는 문제 수정 */ -}}
+{{- /* 테마 원본(themes/template/layouts/_partials/home/profile.html) 복사본: 아바타 alt가 파일 경로로 들어가는 문제 수정, 이름에 소개 페이지 링크 추가 */ -}}
 {{- $profile := .Site.Params.home.profile -}}
 <div class="home-profile">
     {{- $avatar := $profile.avatarURL -}}
@@ -24,7 +24,8 @@
 
     {{- with $profile.title -}}
         <h1 class="home-title">
-            {{- . | safeHTML -}}
+            {{- /* 이름을 누르면 소개 페이지로 이동 */ -}}
+            <a href="{{ "/about/" | relLangURL }}" title="소개 페이지로 이동">{{- . | safeHTML -}}</a>
         </h1>
     {{- end -}}
 

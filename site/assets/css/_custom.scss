@@ -366,3 +366,25 @@
     border-radius: 20px;
   }
 }
+
+// ==============================
+// 홈 이름 링크: 평소엔 제목처럼, 마우스·키보드 초점일 때만 링크임을 표시
+// ==============================
+.home .home-profile .home-title a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+    text-underline-offset: .25em;
+
+    [theme=dark] & { color: #c4b5fd; }
+  }
+
+  &:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+}
