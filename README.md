@@ -75,6 +75,7 @@ python .github/pages_build.py --build
 | 바꾸고 싶은 것 | 파일 |
 |---|---|
 | 사이트 제목, 메뉴, 홈 프로필 문구, GitHub 링크 | `site/hugo.toml` |
+| 홈 왼쪽 바의 연락처, 관심 분야·기술 칩, 지금 하고 있는 것 | `site/hugo.toml`의 `[languages.ko.params.home.profile]` 아래 `email`, `phone`, `interests`, `skills`, `now` |
 | 소개 페이지 | `site/content/about/index.md` |
 | 활동 글 | `site/content/posts/<활동이름>/index.md` |
 | 활동 카드의 상태·기술 배지 | 활동 글 맨 위의 `status`, `tech` |
