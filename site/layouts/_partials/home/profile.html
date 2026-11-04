@@ -1,4 +1,4 @@
-{{- /* 테마 원본(themes/template/layouts/_partials/home/profile.html) 복사본: 아바타 alt가 파일 경로로 들어가는 문제 수정, 이름에 소개 페이지 링크 추가 */ -}}
+{{- /* 테마 원본(themes/template/layouts/_partials/home/profile.html) 복사본: 아바타 alt가 파일 경로로 들어가는 문제 수정, 이름에 소개 페이지 링크 추가, 연락처·요약 블록 추가 */ -}}
 {{- $profile := .Site.Params.home.profile -}}
 <div class="home-profile">
     {{- $avatar := $profile.avatarURL -}}
@@ -97,6 +97,46 @@
             {{- end -}}
             {{- range sort $socialArr "Weight" -}}
                 {{- partial "plugin/social.html" . -}}
+            {{- end -}}
+        </div>
+    {{- end -}}
+
+    {{- /* 연락처: hugo.toml의 home.profile.email, phone 값이 있을 때만 표시 */ -}}
+    {{- if or $profile.email $profile.phone -}}
+        <ul class="home-contact" aria-label="연락처">
+            {{- with $profile.email -}}
+                <li><a href="mailto:{{ . }}"><i class="fas fa-envelope" aria-hidden="true"></i><span>{{ . }}</span></a></li>
+            {{- end -}}
+            {{- with $profile.phone -}}
+                <li><a href="tel:{{ replace . "-" "" }}"><i class="fas fa-phone" aria-hidden="true"></i><span>{{ . }}</span></a></li>
+            {{- end -}}
+        </ul>
+    {{- end -}}
+
+    {{- /* 왼쪽 바 요약: 관심 분야·써 본 기술·지금 하고 있는 것 (hugo.toml home.profile) */ -}}
+    {{- if or $profile.interests $profile.skills $profile.now -}}
+        <div class="home-side">
+            {{- with $profile.interests -}}
+                <section>
+                    <h2>관심 분야</h2>
+                    <ul class="chips">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+                </section>
+            {{- end -}}
+            {{- with $profile.skills -}}
+                <section>
+                    <h2>써 본 기술</h2>
+                    <ul class="chips">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+                </section>
+            {{- end -}}
+            {{- with $profile.now -}}
+                <section>
+                    <h2>지금 하고 있는 것</h2>
+                    <ul class="now">
+                        {{- range . -}}
+                            <li><i class="{{ .icon }}" aria-hidden="true"></i><span>{{ .text }}</span></li>
+                        {{- end -}}
+                    </ul>
+                </section>
             {{- end -}}
         </div>
     {{- end -}}

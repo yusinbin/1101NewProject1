@@ -438,3 +438,121 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+// ==============================
+// 홈 프로필 연락처
+// ==============================
+.home .home-profile .home-contact {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  font-size: .9rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .35rem .8rem;
+    border-radius: 999px;
+    color: inherit;
+    text-decoration: none;
+    background: rgba(124, 58, 237, .08);
+    overflow-wrap: anywhere;
+
+    [theme=dark] & { background: rgba(167, 139, 250, .12); }
+
+    &:hover { color: #7c3aed; [theme=dark] & { color: #c4b5fd; } }
+
+    &:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px;
+    }
+  }
+
+  i { color: #7c3aed; [theme=dark] & { color: #a78bfa; } }
+}
+
+// 넓은 화면 세로 바: 가운데 정렬 대신 위쪽부터 배치해 빈 공간을 줄임
+@media only screen and (min-width: 960px) {
+  .page.home[data-home=posts] .home-profile {
+    justify-content: flex-start;
+    padding-top: 4rem;
+  }
+}
+
+// ==============================
+// 홈 왼쪽 바 요약: 관심 분야·써 본 기술 칩, 지금 하고 있는 것 목록
+// ==============================
+.home .home-profile .home-side {
+  width: 100%;
+  max-width: 17rem;
+  margin: 1.6rem auto 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+
+  h2 {
+    font-size: .8rem;
+    letter-spacing: .06em;
+    margin: 0 0 .45rem;
+    color: #6d28d9;
+    font-weight: 800;
+
+    [theme=dark] & { color: #c4b5fd; }
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      font-size: .8rem;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, .1);
+      border: 1px solid rgba(124, 58, 237, .2);
+
+      [theme=dark] & {
+        background: rgba(167, 139, 250, .12);
+        border-color: rgba(167, 139, 250, .25);
+      }
+    }
+  }
+
+  .now {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    font-size: .85rem;
+
+    li { display: flex; gap: .55rem; align-items: baseline; }
+
+    i {
+      width: 1rem;
+      text-align: center;
+      color: #7c3aed;
+
+      [theme=dark] & { color: #a78bfa; }
+    }
+  }
+}
+
+// 화면 높이가 낮을 때(노트북 등) 왼쪽 바 내용이 잘리지 않도록 바 안에서 스크롤
+@media only screen and (min-width: 960px) {
+  .page.home[data-home=posts] .home-profile {
+    overflow-y: auto;
+    padding-bottom: 2rem;
+  }
+}

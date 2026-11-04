@@ -901,6 +901,17 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
           subtitle = "컴퓨터인공지능학부에 재학 중인 학생입니다."
           extra = '<span lang="en">A Computer Science &amp; AI student interested in security, networking, and big data management.</span>'
           extraItalic = true
+          # 홈 프로필 아래 연락처 (비우면 표시 안 함)
+          email = "binyu2004@naver.com"
+          phone = ""
+          # 홈 왼쪽 바 요약 (비우면 해당 칸 숨김)
+          interests = ["보안", "네트워크", "빅데이터 관리"]
+          skills = ["Wireshark", "Python", "Git", "GitHub Actions", "Claude"]
+          now = [
+            { icon = "fas fa-database", text = "SQLD 재도전 준비 (겨울방학 응시)" },
+            { icon = "fas fa-shield-halved", text = "드림핵 워게임 입문 문제 풀기" },
+            { icon = "fas fa-code", text = "이 포트폴리오 다듬기" },
+          ]
           typeit = true
           social = true
           disclaimer = ""
