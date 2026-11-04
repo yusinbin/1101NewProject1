@@ -388,3 +388,53 @@
     border-radius: 6px;
   }
 }
+
+// ==============================
+// 넓은 화면(960px 이상) 홈 배치: 프로필을 왼쪽 끝에 붙은 세로 바로, 활동 카드를 오른쪽에
+// 좁은 화면에서는 위 규칙대로 위아래로 쌓임
+// ==============================
+@media only screen and (min-width: 960px) {
+  .page.home[data-home=posts] {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+    // .main .container의 왼쪽 여백(1rem)을 상쇄해 화면 왼쪽 끝에 붙임
+    width: calc(100% + 1rem);
+    max-width: none;
+    margin: 0 0 0 -1rem;
+  }
+
+  .page.home[data-home=posts] .home-profile {
+    position: sticky;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 2rem 1.75rem;
+    text-align: center;
+    border-left: 0;
+    border-top: 0;
+    border-radius: 0 28px 28px 0;
+
+    .home-extra { max-width: 16rem; }
+  }
+
+  .page.home[data-home=posts] .activity-section {
+    margin: 1.5rem 2rem 3rem 0;
+    max-width: 1080px;
+  }
+
+  .page.home[data-home=posts] .activity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .page.home[data-home=posts] .activity-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
