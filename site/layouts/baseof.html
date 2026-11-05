@@ -1,4 +1,4 @@
-{{- /* 테마 baseof.html 덮어쓰기: 본문 바로가기 링크와 main id 추가 (변경: skip-link, main-content, 댓글 버튼 조건부 출력) */ -}}
+{{- /* 테마 baseof.html 덮어쓰기: 본문 바로가기 링크와 main id 추가 (변경: skip-link, main-content, 댓글 버튼 조건부 출력, 맨 위로 버튼 #page-top) */ -}}
 {{- partial "init.html" . -}}
 
 <!DOCTYPE html>
@@ -31,7 +31,7 @@
           })();
         </script>
     </head>
-    <body data-header-desktop="{{ .Site.Params.header.desktopMode }}" data-header-mobile="{{ .Site.Params.header.mobileMode }}"{{ if not (partial "function/searchable.html" .) }} data-pagefind-ignore="all"{{ end }}>
+    <body id="page-top" data-header-desktop="{{ .Site.Params.header.desktopMode }}" data-header-mobile="{{ .Site.Params.header.mobileMode }}"{{ if not (partial "function/searchable.html" .) }} data-pagefind-ignore="all"{{ end }}>
         {{- /* Check theme isDark before body rendering */ -}}
         {{- $theme := .Site.Params.defaulttheme -}}
         <script>
@@ -65,7 +65,8 @@
 
         <div id="fixed-buttons">
             {{- /* top button */ -}}
-            <a href="#" id="back-to-top" class="fixed-button" title="{{ T `backToTop` }}">
+            {{- /* 의미 없는 # 대신 실제로 존재하는 페이지 맨 위(#page-top)로 이동 */ -}}
+            <a href="#page-top" id="back-to-top" class="fixed-button" title="{{ T `backToTop` }}" aria-label="{{ T `backToTop` }}">
                 <i class="fas fa-arrow-up" aria-hidden="true"></i>
             </a>
         </div>
@@ -108,6 +109,30 @@
           window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
             setTimeout(updateThemeSwitchLabel, 0);
           });
+
+          /* 좁은 화면의 메뉴(≡) 버튼: 테마 원본은 이름 없는 div라 키보드로 닿지 않고 화면 낭독기가 읽지 못함.
+             버튼 역할·이름·열림 상태를 붙이고 Enter/Space로도 열고 닫게 함 */
+          (function () {
+            var toggle = document.getElementById('menu-toggle-mobile');
+            var menu = document.getElementById('menu-mobile');
+            if (!toggle) return;
+            toggle.setAttribute('role', 'button');
+            toggle.setAttribute('tabindex', '0');
+            if (menu) toggle.setAttribute('aria-controls', 'menu-mobile');
+            function sync() {
+              var open = toggle.classList.contains('active');
+              toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+              toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+            }
+            sync();
+            new MutationObserver(sync).observe(toggle, { attributes: true, attributeFilter: ['class'] });
+            toggle.addEventListener('keydown', function (event) {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggle.click();
+              }
+            });
+          })();
         </script>
     </body>
 </html>
