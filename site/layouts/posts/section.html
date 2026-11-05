@@ -1,0 +1,50 @@
+{{- /* 테마 section.html 덮어쓰기(활동 목록): 페이지 제목을 '활동'(h1)으로, 제목에 마우스·키보드 초점이 가면 미리보기 카드 표시 */ -}}
+{{- define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
+
+{{- define "content" -}}
+    <div class="page archive activity-archive">
+        <h1 class="single-title">{{ .Title }}</h1>
+        <p class="archive-intro">직접 만들고 배운 활동 {{ len .Pages }}개를 모았습니다.<span class="hover-hint"> 제목에 마우스를 올리면 미리 볼 수 있어요.</span></p>
+
+        {{- if .Pages -}}
+            {{- $pages := .Pages.GroupByDate "2006" -}}
+            {{- with .Site.Params.section.paginate | default .Site.Params.paginate -}}
+                {{- $pages = $.Paginate $pages . -}}
+            {{- else -}}
+                {{- $pages = .Paginate $pages -}}
+            {{- end -}}
+            {{- range $pages.PageGroups -}}
+                <h2 class="group-title">{{ .Key }}</h2>
+                {{- range .Pages -}}
+                    {{- $img := "" -}}
+                    {{- $page := . -}}
+                    {{- with .Params.featuredImage -}}
+                        {{- with $page.Resources.GetMatch . -}}{{- $img = .RelPermalink -}}{{- end -}}
+                    {{- end -}}
+                    <article class="archive-item">
+                        <a href="{{ .RelPermalink }}" class="archive-item-link">
+                            {{- .Title | emojify -}}
+                        </a>
+                        <span class="archive-item-date">
+                            {{- $.Site.Params.section.dateFormat | default "01-02" | .Date.Format -}}
+                        </span>
+                        {{- /* 미리보기: 상세 페이지 내용을 요약해 보여 주는 장식용이라 화면 낭독기에서는 숨김 */ -}}
+                        <div class="archive-preview" aria-hidden="true">
+                            {{- with $img -}}<img src="{{ . }}" alt="" loading="lazy">{{- end -}}
+                            <div class="archive-preview-body">
+                                {{- with .Params.status -}}
+                                    <span class="activity-status{{ if eq . "완료" }} is-done{{ else }} is-ongoing{{ end }}">{{ . }}</span>
+                                {{- end -}}
+                                <p>{{ .Summary | plainify | truncate 110 }}</p>
+                                {{- with .Params.tech -}}
+                                    <ul class="activity-tech">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+                                {{- end -}}
+                            </div>
+                        </div>
+                    </article>
+                {{- end -}}
+            {{- end -}}
+            {{- partial "paginator.html" . -}}
+        {{- end -}}
+    </div>
+{{- end -}}

@@ -556,3 +556,129 @@
     padding-bottom: 2rem;
   }
 }
+
+// ==============================
+// 활동 목록(/posts/): 제목에 마우스·키보드 초점이 가면 미리보기 카드 표시
+// 좁은 화면·터치 기기에서는 미리보기 없이 눌러서 바로 이동
+// ==============================
+.activity-archive {
+  .archive-intro {
+    text-align: right;
+    margin: -.5rem 0 1.5rem;
+    font-size: .9rem;
+    color: #4b5563;
+
+    [theme=dark] & { color: #a1a1aa; }
+  }
+
+  .archive-item {
+    position: relative;
+
+    .archive-item-link {
+      font-weight: 600;
+
+      &:hover,
+      &:focus-visible {
+        color: #7c3aed;
+
+        [theme=dark] & { color: #c4b5fd; }
+      }
+
+      &:focus-visible {
+        outline: 3px solid #f59e0b;
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .archive-preview {
+    position: absolute;
+    z-index: 20;
+    top: -.6rem;
+    left: 45%;
+    width: 21rem;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(124, 58, 237, .25);
+    box-shadow: 0 14px 34px rgba(17, 12, 46, .18);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    [theme=dark] & {
+      background: #1f2023;
+      border-color: rgba(167, 139, 250, .3);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .5);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .archive-preview-body {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      padding: .8rem .9rem .9rem;
+
+      p {
+        margin: 0;
+        font-size: .85rem;
+        line-height: 1.55;
+      }
+    }
+
+    .activity-status {
+      align-self: flex-start;
+      padding: .15rem .6rem;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+
+      &.is-ongoing { background: #fef3c7; color: #92400e; }
+      &.is-done { background: #d1fae5; color: #065f46; }
+    }
+
+    .activity-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding: .1rem .45rem;
+        border-radius: 6px;
+        background: #ede9fe;
+        color: #4c1d95;
+        font-size: .72rem;
+
+        [theme=dark] & { background: #2e1065; color: #ddd6fe; }
+      }
+    }
+  }
+
+  .archive-item:hover .archive-preview,
+  .archive-item:focus-within .archive-preview {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .activity-archive .archive-preview {
+    transition: opacity .18s ease, visibility .18s ease;
+  }
+}
+
+// 좁은 화면이나 마우스 없는 터치 기기에서는 미리보기를 쓰지 않음
+@media only screen and (max-width: 959px), (hover: none) {
+  .activity-archive .archive-preview,
+  .activity-archive .hover-hint { display: none; }
+}
