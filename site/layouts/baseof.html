@@ -74,7 +74,21 @@
             document.body.setAttribute('theme', next);
             document.body.setAttribute('cfg-theme', next);
             try { window.localStorage.setItem('theme', next); } catch (e) {}
+            updateThemeSwitchLabel();
           }, true);
+
+          /* 버튼 이름을 '누르면 바뀔 모드'로 표시 (마우스 올림 안내와 화면 낭독기용) */
+          function updateThemeSwitchLabel() {
+            var label = document.body.getAttribute('theme') === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';
+            document.querySelectorAll('.theme-switch').forEach(function (button) {
+              button.setAttribute('title', label);
+              button.setAttribute('aria-label', label);
+            });
+          }
+          updateThemeSwitchLabel();
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+            setTimeout(updateThemeSwitchLabel, 0);
+          });
         </script>
     </body>
 </html>

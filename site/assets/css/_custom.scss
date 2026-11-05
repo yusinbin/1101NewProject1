@@ -690,3 +690,30 @@
   .activity-archive .archive-preview,
   .activity-archive .hover-hint { display: none; }
 }
+
+// ==============================
+// 다크 모드 버튼 아이콘: 누르면 바뀔 모드를 보여 줌
+// 라이트 모드 → 달, 다크 모드 → 둥근 해(직접 그린 SVG)
+// 테마 기본 해 아이콘은 가운데 구멍과 225도 회전 때문에 톱니바퀴(설정)처럼 보였음
+// ==============================
+.theme-switch i {
+  body[theme] & {
+    transform: none;
+  }
+
+  body[theme=light] & {
+    --fa: '\f186';
+  }
+
+  body[theme=dark] & {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -.125em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5.2'/%3E%3Cg stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cline x1='20.2' y1='12' x2='23' y2='12'/%3E%3Cline x1='17.8' y1='17.8' x2='19.78' y2='19.78'/%3E%3Cline x1='12' y1='20.2' x2='12' y2='23'/%3E%3Cline x1='6.2' y1='17.8' x2='4.22' y2='19.78'/%3E%3Cline x1='3.8' y1='12' x2='1' y2='12'/%3E%3Cline x1='6.2' y1='6.2' x2='4.22' y2='4.22'/%3E%3Cline x1='12' y1='3.8' x2='12' y2='1'/%3E%3Cline x1='17.8' y1='6.2' x2='19.78' y2='4.22'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5.2'/%3E%3Cg stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cline x1='20.2' y1='12' x2='23' y2='12'/%3E%3Cline x1='17.8' y1='17.8' x2='19.78' y2='19.78'/%3E%3Cline x1='12' y1='20.2' x2='12' y2='23'/%3E%3Cline x1='6.2' y1='17.8' x2='4.22' y2='19.78'/%3E%3Cline x1='3.8' y1='12' x2='1' y2='12'/%3E%3Cline x1='6.2' y1='6.2' x2='4.22' y2='4.22'/%3E%3Cline x1='12' y1='3.8' x2='12' y2='1'/%3E%3Cline x1='17.8' y1='6.2' x2='19.78' y2='4.22'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+
+    &::before { content: none; }
+  }
+}
