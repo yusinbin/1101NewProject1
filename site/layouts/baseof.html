@@ -12,6 +12,24 @@
         {{- partial "head/meta.html" . -}}
         {{- partial "head/link.html" . -}}
         {{- partial "head/seo.html" . -}}
+
+        {{- /* 관리자 모드: 주소 끝에 ?admin 을 붙여 한 번 들어오면 이 브라우저에서만 관리자 버튼(활동 추가·상태 바꾸기·글 수정)이 보임.
+               ?admin=off 로 끔. 버튼을 보이게 할 뿐이며, 실제 저장은 GitHub 저장소 주인만 할 수 있음 */ -}}
+        <script>
+          (function () {
+            var key = 'portfolio-admin';
+            var on = false;
+            try {
+              var mode = new URLSearchParams(location.search).get('admin');
+              if (mode === 'off') localStorage.removeItem(key);
+              else if (mode !== null) localStorage.setItem(key, '1');
+              on = localStorage.getItem(key) === '1';
+            } catch (e) {
+              on = /[?&]admin(=|&|$)/.test(location.search) && !/[?&]admin=off/.test(location.search);
+            }
+            if (on) document.documentElement.classList.add('is-admin');
+          })();
+        </script>
     </head>
     <body data-header-desktop="{{ .Site.Params.header.desktopMode }}" data-header-mobile="{{ .Site.Params.header.mobileMode }}"{{ if not (partial "function/searchable.html" .) }} data-pagefind-ignore="all"{{ end }}>
         {{- /* Check theme isDark before body rendering */ -}}
@@ -30,6 +48,7 @@
         </script>
 
         <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+        <a class="admin-badge admin-only" href="?admin=off" title="관리자 버튼 숨기기">관리자 모드 켜짐 · 끄기</a>
 
         <div id="mask"></div>
 

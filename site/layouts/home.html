@@ -40,7 +40,7 @@
                         {{- if and $repo .File .Params.status -}}
                             {{- $next := cond (eq .Params.status "완료") "진행 중" "완료" -}}
                             {{- $nextLabel := cond (eq $next "완료") "완료로" "진행 중으로" -}}
-                            <button type="button" class="status-toggle" data-title="{{ .Title }}" data-status="{{ .Params.status }}"
+                            <button type="button" class="status-toggle admin-only" data-title="{{ .Title }}" data-status="{{ .Params.status }}"
                                     data-next="{{ $next }}" data-path="{{ .File.Path | replaceRE `\\` "/" }}"
                                     aria-label="{{ .Title }} 상태를 {{ $nextLabel }} 바꾸기 (관리자용)">
                                 <i class="fas fa-arrows-rotate" aria-hidden="true"></i> {{ $nextLabel }}
@@ -51,7 +51,7 @@
                 {{- with .Site.Params.gitRepo -}}
                     {{- $query := querify "filename" "new-activity/index.md" "value" (partial "activity-new-template.html" $) -}}
                     {{- $url := printf "%s/new/main/site/content/posts?%s" . $query -}}
-                    <li>
+                    <li class="admin-only">
                         <a class="activity-card activity-add" id="activity-add-link" href="{{ $url }}" target="_blank" rel="noopener noreferrer"
                            data-repo="{{ . }}" title="새 활동 추가 (관리자용)">
                             <span class="activity-add-icon" aria-hidden="true">+</span>
