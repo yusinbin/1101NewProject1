@@ -5,6 +5,7 @@ draft: false
 description: "Hugo와 GitHub Actions로 개인 포트폴리오 사이트를 만들고 자동 배포한 과정"
 summary: "Hugo 테마 LoveIt으로 지금 보고 있는 이 사이트를 만들고, main 브랜치에 push하면 GitHub Actions가 자동으로 빌드·배포하도록 구성했습니다. 만든 기능과 직접 겪은 문제 8건의 원인·해결을 표로 정리했습니다."
 status: "진행 중"
+category: ["웹 개발"]
 tech: ["Hugo", "LoveIt", "GitHub Actions", "GitHub Pages"]
 featuredImage: "featured-image.svg"
 featuredImageAlt: "LoveIt 테마 ZIP에서 배포 준비 스크립트와 git push를 거쳐 GitHub Actions로 자동 배포되는 흐름도"

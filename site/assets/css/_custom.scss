@@ -703,3 +703,85 @@
     &::before { content: none; }
   }
 }
+
+// ==============================
+// 홈 분야 필터 버튼과 카드의 분야 꼬리표
+// ==============================
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.activity-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0 0 1.1rem;
+
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    min-height: 2.25rem;
+    padding: .3rem .9rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(124, 58, 237, .35);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+
+    .filter-count {
+      font-size: .75rem;
+      padding: 0 .45rem;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, .12);
+    }
+
+    &:hover { border-color: #7c3aed; }
+
+    &[aria-pressed=true] {
+      background: #6d28d9;
+      border-color: #6d28d9;
+      color: #fff;
+      font-weight: 700;
+
+      .filter-count { background: rgba(255, 255, 255, .25); }
+    }
+
+    &:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px;
+    }
+
+    [theme=dark] & { border-color: rgba(167, 139, 250, .4); }
+    [theme=dark] &[aria-pressed=true] { background: #7c3aed; border-color: #7c3aed; }
+  }
+}
+
+.activity-card .activity-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+
+  .activity-category {
+    padding: .15rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+    border: 1px solid rgba(124, 58, 237, .35);
+    color: #5b21b6;
+
+    [theme=dark] & { color: #c4b5fd; border-color: rgba(167, 139, 250, .4); }
+  }
+}
+
+.activity-grid > li[hidden] { display: none; }

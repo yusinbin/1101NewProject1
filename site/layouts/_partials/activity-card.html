@@ -10,9 +10,14 @@
         {{- end -}}
     </div>
     <div class="activity-body">
-        {{- with .Params.status -}}
-            <span class="activity-status{{ if eq . "완료" }} is-done{{ else }} is-ongoing{{ end }}">{{ . }}</span>
-        {{- end }}
+        <div class="activity-labels">
+            {{- with .Params.status -}}
+                <span class="activity-status{{ if eq . "완료" }} is-done{{ else }} is-ongoing{{ end }}">{{ . }}</span>
+            {{- end -}}
+            {{- range .Params.category -}}
+                <span class="activity-category">{{ . }}</span>
+            {{- end -}}
+        </div>
         <h3 class="activity-title">{{ .Title }}</h3>
         <span class="activity-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></span>
         <p class="activity-summary">{{ .Summary | plainify | truncate 90 }}</p>

@@ -79,6 +79,7 @@ python .github/pages_build.py --build
 | 소개 페이지 | `site/content/about/index.md` |
 | 활동 글 | `site/content/posts/<활동이름>/index.md` |
 | 활동 카드의 상태·기술 배지 | 활동 글 맨 위의 `status`, `tech` |
+| 활동 분야(홈 필터 버튼) | 활동 글 맨 위의 `category` (예: `category: ["보안"]`). 새 분야를 적으면 홈에 필터 버튼이 자동으로 생깁니다 |
 | 홈 화면 구조 (활동 카드 그리드) | `site/layouts/home.html`, `site/layouts/_partials/activity-card.html` |
 | 404 페이지 | `site/layouts/404.html` |
 | 직접 추가한 스타일 | `site/assets/css/_custom.scss` |

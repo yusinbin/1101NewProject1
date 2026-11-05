@@ -5,6 +5,7 @@ draft: false
 description: "모바일프로그래밍 수업 기말 개인 과제로 만든 Kotlin·Firebase 기반 SNS 안드로이드 앱"
 summary: "모바일프로그래밍 기말 개인 과제로 인스타그램 같은 SNS 앱을 기획하고, AI 도구(Claude)를 활용해 Kotlin·Jetpack Compose·Firebase로 구현했습니다. 게시물 업로드, 메시지, 팔로우, 프로필 꾸미기 기능이 있습니다."
 status: "완료"
+category: ["앱 개발"]
 tech: ["Kotlin", "Jetpack Compose", "Firebase", "ImgBB API"]
 featuredImage: "featured-image.png"
 featuredImageAlt: "InstaClone 앱의 피드 화면과 새 게시물 작성 화면 캡처"

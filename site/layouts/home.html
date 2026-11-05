@@ -1,4 +1,4 @@
-{{- /* 테마 home.html 덮어쓰기: 프로필 + 활동 카드 그리드 + 활동 추가(+) 카드 */ -}}
+{{- /* 테마 home.html 덮어쓰기: 프로필 + 분야 필터 + 활동 카드 그리드 + 활동 추가(+) 카드 */ -}}
 {{- define "content" -}}
     {{- $profile := .Site.Params.home.profile -}}
     {{- $posts := .Site.Params.home.posts -}}
@@ -10,9 +10,30 @@
 
         <section class="activity-section" aria-labelledby="activity-heading">
             <h2 class="activity-heading" id="activity-heading">대표 활동</h2>
+
+            {{- /* 분야 필터: 활동 글의 category 값을 모아 버튼을 자동으로 만듦 */ -}}
+            {{- $activities := where .Site.RegularPages "Type" "posts" -}}
+            {{- $categories := slice -}}
+            {{- range $activities -}}
+                {{- range .Params.category -}}{{- $categories = $categories | append . -}}{{- end -}}
+            {{- end -}}
+            {{- $categories = $categories | uniq | sort -}}
+            {{- with $categories -}}
+                <div class="activity-filter" role="group" aria-label="분야별로 활동 보기">
+                    <button type="button" class="filter-btn" data-filter="" aria-pressed="true">전체 <span class="filter-count">{{ len $activities }}</span></button>
+                    {{- range . -}}
+                        {{- $name := . -}}
+                        {{- $count := 0 -}}
+                        {{- range $activities -}}{{- if in .Params.category $name -}}{{- $count = add $count 1 -}}{{- end -}}{{- end -}}
+                        <button type="button" class="filter-btn" data-filter="{{ $name }}" aria-pressed="false">{{ $name }} <span class="filter-count">{{ $count }}</span></button>
+                    {{- end -}}
+                </div>
+                <p class="visually-hidden" id="activity-filter-status" aria-live="polite"></p>
+            {{- end -}}
+
             <ul class="activity-grid">
-                {{- range where .Site.RegularPages "Type" "posts" -}}
-                    <li>{{ partial "activity-card.html" . }}</li>
+                {{- range $activities -}}
+                    <li data-category="{{ delimit (.Params.category | default slice) "|" }}">{{ partial "activity-card.html" . }}</li>
                 {{- end -}}
                 {{- with .Site.Params.gitRepo -}}
                     {{- $query := querify "filename" "new-activity/index.md" "value" (partial "activity-new-template.html" $) -}}
@@ -28,5 +49,30 @@
                 {{- end -}}
             </ul>
         </section>
+
+        {{- /* 필터 동작: 누른 분야의 카드만 보이게 함. 스크립트가 없으면 모든 카드가 그대로 보임 */ -}}
+        <script>
+          (function () {
+            var group = document.querySelector('.activity-filter');
+            if (!group) return;
+            var items = document.querySelectorAll('.activity-grid > li[data-category]');
+            var status = document.getElementById('activity-filter-status');
+            group.addEventListener('click', function (event) {
+              var button = event.target.closest('.filter-btn');
+              if (!button) return;
+              var filter = button.getAttribute('data-filter');
+              var shown = 0;
+              items.forEach(function (item) {
+                var match = !filter || item.getAttribute('data-category').split('|').indexOf(filter) !== -1;
+                item.hidden = !match;
+                if (match) shown++;
+              });
+              group.querySelectorAll('.filter-btn').forEach(function (other) {
+                other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
+              });
+              status.textContent = (filter || '전체') + ' 활동 ' + shown + '개를 보여 줍니다.';
+            });
+          })();
+        </script>
     </div>
 {{- end -}}
