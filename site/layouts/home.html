@@ -39,15 +39,65 @@
                     {{- $query := querify "filename" "new-activity/index.md" "value" (partial "activity-new-template.html" $) -}}
                     {{- $url := printf "%s/new/main/site/content/posts?%s" . $query -}}
                     <li>
-                        <a class="activity-card activity-add" href="{{ $url }}" target="_blank" rel="noopener noreferrer"
-                           title="새 활동 추가 (관리자용, GitHub 편집기가 새 탭에서 열림)">
+                        <a class="activity-card activity-add" id="activity-add-link" href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                           data-repo="{{ . }}" title="새 활동 추가 (관리자용)">
                             <span class="activity-add-icon" aria-hidden="true">+</span>
                             <span class="activity-add-label">활동 추가</span>
-                            <span class="activity-add-note">관리자용 · GitHub에서 작성 후 자동 배포</span>
+                            <span class="activity-add-note">관리자용 · 정보 입력 후 GitHub에서 저장</span>
                         </a>
                     </li>
                 {{- end -}}
             </ul>
+
+            {{- /* 활동 추가 창: 정보를 입력하면 활동 글 양식을 채워 GitHub 새 파일 화면으로 넘김. 토큰·비밀번호는 쓰지 않음 */ -}}
+            {{- with .Site.Params.gitRepo -}}
+            <dialog class="activity-dialog" id="activity-dialog" aria-labelledby="activity-dialog-title">
+                <form class="activity-form" id="activity-form" method="dialog">
+                    <h2 id="activity-dialog-title">새 활동 추가</h2>
+                    <p class="activity-form-note">입력한 내용으로 글 양식을 채워 GitHub 편집 화면을 엽니다. 거기서 본문을 다듬고 <b>Commit changes</b>를 누르면 자동으로 배포됩니다.</p>
+
+                    <label for="af-title">제목 <span class="req" aria-hidden="true">*</span></label>
+                    <input id="af-title" name="title" type="text" required maxlength="80" placeholder="예: 드림핵 웹 해킹 입문 문제 풀이">
+
+                    <label for="af-slug">폴더 이름 (주소에 쓰임, 영어 소문자·숫자·-)</label>
+                    <input id="af-slug" name="slug" type="text" pattern="[a-z0-9][a-z0-9\-]*" maxlength="60" placeholder="예: dreamhack-web" aria-describedby="af-slug-help">
+                    <small id="af-slug-help">비워 두면 날짜로 자동으로 정합니다 (예: activity-20261105).</small>
+
+                    <div class="activity-form-row">
+                        <div>
+                            <label for="af-date">날짜</label>
+                            <input id="af-date" name="date" type="date" required>
+                        </div>
+                        <div>
+                            <label for="af-status">상태</label>
+                            <select id="af-status" name="status">
+                                <option>진행 중</option>
+                                <option>완료</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label for="af-category">분야 (쉼표로 여러 개)</label>
+                    <input id="af-category" name="category" type="text" list="af-category-list" placeholder="예: 보안, 네트워크">
+                    <datalist id="af-category-list">
+                        {{- range $categories }}<option value="{{ . }}">{{ end -}}
+                        <option value="보안"><option value="네트워크"><option value="빅데이터">
+                    </datalist>
+
+                    <label for="af-tech">사용 기술 (쉼표로 여러 개)</label>
+                    <input id="af-tech" name="tech" type="text" placeholder="예: Python, Wireshark">
+
+                    <label for="af-summary">카드에 보일 요약</label>
+                    <textarea id="af-summary" name="summary" rows="3" maxlength="200" placeholder="2~3줄로 무엇을 했는지"></textarea>
+
+                    <div class="activity-form-actions">
+                        <button type="button" class="af-cancel" id="af-cancel">취소</button>
+                        <button type="submit" class="af-submit">GitHub에서 이어서 쓰기 ↗</button>
+                    </div>
+                </form>
+            </dialog>
+            <script type="application/json" id="activity-template">{{ partial "activity-new-template.html" $ }}</script>
+            {{- end -}}
         </section>
 
         {{- /* 필터 동작: 누른 분야의 카드만 보이게 함. 스크립트가 없으면 모든 카드가 그대로 보임 */ -}}
@@ -71,6 +121,63 @@
                 other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
               });
               status.textContent = (filter || '전체') + ' 활동 ' + shown + '개를 보여 줍니다.';
+            });
+          })();
+        </script>
+        {{- /* 활동 추가 창 동작. 스크립트나 dialog를 지원하지 않으면 링크가 예전처럼 GitHub 화면을 바로 엶 */ -}}
+        <script>
+          (function () {
+            var link = document.getElementById('activity-add-link');
+            var dialog = document.getElementById('activity-dialog');
+            if (!link || !dialog || typeof dialog.showModal !== 'function') return;
+            var form = document.getElementById('activity-form');
+            var repo = link.getAttribute('data-repo');
+
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+            function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+            function q(text) { return '"' + String(text).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'; }
+            function list(text) {
+              var items = String(text).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+              return '[' + items.map(q).join(', ') + ']';
+            }
+
+            link.addEventListener('click', function (event) {
+              event.preventDefault();
+              if (!form.date.value) form.date.value = today();
+              dialog.showModal();
+              form.title.focus();
+            });
+            document.getElementById('af-cancel').addEventListener('click', function () { dialog.close(); });
+            dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
+
+            form.addEventListener('submit', function (event) {
+              event.preventDefault();
+              if (!form.reportValidity()) return;
+              var date = form.date.value || today();
+              var slug = form.slug.value.trim() || ('activity-' + date.replace(/-/g, ''));
+              var template = JSON.parse(document.getElementById('activity-template').textContent);
+              var body = template.split(/^---\s*$/m).slice(2).join('---').replace(/^\n+/, '');
+              var front = [
+                '---',
+                'title: ' + q(form.title.value.trim()),
+                'date: ' + date + 'T09:00:00+09:00',
+                'draft: false',
+                'description: ' + q(form.summary.value.trim().split('\n')[0] || form.title.value.trim()),
+                'summary: ' + q(form.summary.value.trim().replace(/\s*\n\s*/g, ' ')),
+                'status: ' + q(form.status.value),
+                'category: ' + list(form.category.value),
+                'tech: ' + list(form.tech.value),
+                '# 대표 이미지: 같은 폴더에 이미지를 올린 뒤 아래 두 줄의 # 를 지우세요',
+                '# featuredImage: "featured-image.png"',
+                '# featuredImageAlt: "대표 이미지 설명"',
+                '---',
+                '',
+                ''
+              ].join('\n');
+              var url = repo + '/new/main/site/content/posts?filename=' +
+                encodeURIComponent(slug + '/index.md') + '&value=' + encodeURIComponent(front + body);
+              window.open(url, '_blank', 'noopener');
+              dialog.close();
             });
           })();
         </script>

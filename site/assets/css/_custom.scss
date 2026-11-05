@@ -785,3 +785,92 @@
 }
 
 .activity-grid > li[hidden] { display: none; }
+
+// 활동 추가 입력 창 (dialog)
+.activity-dialog {
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 0;
+  border: 1px solid rgba(124, 58, 237, .35);
+  border-radius: 16px;
+  background: #fff;
+  color: #1f2937;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+
+  &::backdrop { background: rgba(17, 12, 34, .55); }
+
+  [theme=dark] & {
+    background: #1f1f2b;
+    color: #e5e7eb;
+    border-color: rgba(167, 139, 250, .4);
+  }
+}
+
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  padding: 1.5rem;
+
+  h2 { margin: 0 0 .25rem; font-size: 1.3rem; }
+
+  .activity-form-note {
+    margin: 0 0 .6rem;
+    font-size: .85rem;
+    color: #6b7280;
+
+    [theme=dark] & { color: #9ca3af; }
+  }
+
+  label { margin-top: .5rem; font-size: .9rem; font-weight: 600; }
+  .req { color: #dc2626; }
+  small { font-size: .78rem; color: #6b7280; }
+
+  input, select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5rem .7rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+
+    &:focus-visible { outline: 3px solid #f59e0b; outline-offset: 1px; border-color: #7c3aed; }
+
+    [theme=dark] & { border-color: #4b5563; }
+  }
+
+  select option { color: #1f2937; }
+  textarea { resize: vertical; }
+
+  .activity-form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 0 .8rem;
+
+    > div { display: flex; flex-direction: column; gap: .35rem; }
+  }
+
+  .activity-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .6rem;
+    margin-top: 1.2rem;
+
+    button {
+      min-height: 2.5rem;
+      padding: .4rem 1.1rem;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+    }
+
+    .af-cancel { border: 1.5px solid #d1d5db; background: transparent; color: inherit; }
+    .af-submit { border: 1.5px solid #6d28d9; background: #6d28d9; color: #fff; }
+  }
+}
