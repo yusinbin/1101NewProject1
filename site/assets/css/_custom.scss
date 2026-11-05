@@ -669,6 +669,14 @@
     opacity: 1;
     visibility: visible;
   }
+
+  // 마우스가 다른 제목 위에 있으면, 키보드 초점만 남은 제목의 미리보기는 숨김 (두 카드가 겹쳐 보이던 문제)
+  &:hover .archive-item:focus-within:not(:hover) .archive-preview {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .archive-item:hover .archive-preview { z-index: 21; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
