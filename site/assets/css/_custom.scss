@@ -22,9 +22,12 @@
   }
 }
 
+// 카드 최소 폭(16rem ≈ 256px)만 정하고, 들어갈 수 있는 만큼 열을 자동으로 만듦.
+// 활동 개수나 화면 폭이 바뀌어도 남는 폭을 카드들이 똑같이 나눠 가져 줄이 맞게 정렬됨.
+// min(100%, 16rem): 화면이 16rem보다 좁아도 카드가 넘치지 않게 함.
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
   gap: 1.25rem;
   list-style: none;
   margin: 0;
@@ -36,13 +39,6 @@
   }
 }
 
-@media only screen and (max-width: 1023px) {
-  .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media only screen and (max-width: 599px) {
-  .activity-grid { grid-template-columns: minmax(0, 1fr); }
-}
 
 .activity-card {
   display: flex;
@@ -426,16 +422,6 @@
   .page.home[data-home=posts] .activity-section {
     margin: 1.5rem 2rem 3rem 0;
     max-width: 1080px;
-  }
-
-  .page.home[data-home=posts] .activity-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media only screen and (min-width: 1280px) {
-  .page.home[data-home=posts] .activity-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
