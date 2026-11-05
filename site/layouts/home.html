@@ -32,8 +32,21 @@
             {{- end -}}
 
             <ul class="activity-grid">
+                {{- $repo := .Site.Params.gitRepo -}}
                 {{- range $activities -}}
-                    <li data-category="{{ delimit (.Params.category | default slice) "|" }}">{{ partial "activity-card.html" . }}</li>
+                    <li class="activity-item" data-category="{{ delimit (.Params.category | default slice) "|" }}">
+                        {{- partial "activity-card.html" . -}}
+                        {{- /* 관리자용 상태 바꾸기 버튼 (카드 링크 밖에 두어 링크 안에 버튼이 겹치지 않게 함) */ -}}
+                        {{- if and $repo .File .Params.status -}}
+                            {{- $next := cond (eq .Params.status "완료") "진행 중" "완료" -}}
+                            {{- $nextLabel := cond (eq $next "완료") "완료로" "진행 중으로" -}}
+                            <button type="button" class="status-toggle" data-title="{{ .Title }}" data-status="{{ .Params.status }}"
+                                    data-next="{{ $next }}" data-path="{{ .File.Path | replaceRE `\\` "/" }}"
+                                    aria-label="{{ .Title }} 상태를 {{ $nextLabel }} 바꾸기 (관리자용)">
+                                <i class="fas fa-arrows-rotate" aria-hidden="true"></i> {{ $nextLabel }}
+                            </button>
+                        {{- end -}}
+                    </li>
                 {{- end -}}
                 {{- with .Site.Params.gitRepo -}}
                     {{- $query := querify "filename" "new-activity/index.md" "value" (partial "activity-new-template.html" $) -}}
@@ -93,6 +106,24 @@
                     <div class="activity-form-actions">
                         <button type="button" class="af-cancel" id="af-cancel">취소</button>
                         <button type="submit" class="af-submit">GitHub에서 이어서 쓰기 ↗</button>
+                    </div>
+                </form>
+            </dialog>
+            <dialog class="activity-dialog" id="status-dialog" aria-labelledby="status-dialog-title">
+                <form class="activity-form" id="status-form" method="dialog">
+                    <h2 id="status-dialog-title">상태 바꾸기</h2>
+                    <p><strong id="status-dialog-name"></strong>의 상태를 <span class="status-from" id="status-dialog-from"></span> → <span class="status-to" id="status-dialog-to"></span><span id="status-dialog-josa">로</span> 바꿉니다.</p>
+                    <ol class="status-steps">
+                        <li>아래 버튼을 누르면 바꿀 줄이 복사되고 GitHub 편집 화면이 열립니다.</li>
+                        <li>글 맨 위의 <code>status:</code> 줄을 지우고 붙여 넣으세요 (Ctrl+V).</li>
+                        <li><b>Commit changes</b>를 누르면 자동으로 배포됩니다.</li>
+                    </ol>
+                    <label for="status-line">바꿀 줄</label>
+                    <input id="status-line" type="text" readonly>
+                    <p class="visually-hidden" id="status-copy-result" aria-live="polite"></p>
+                    <div class="activity-form-actions">
+                        <button type="button" class="af-cancel" id="status-cancel">취소</button>
+                        <button type="submit" class="af-submit">줄 복사하고 GitHub 열기 ↗</button>
                     </div>
                 </form>
             </dialog>
@@ -178,6 +209,57 @@
                 encodeURIComponent(slug + '/index.md') + '&value=' + encodeURIComponent(front + body);
               window.open(url, '_blank', 'noopener');
               dialog.close();
+            });
+          })();
+        </script>
+
+        {{- /* 상태 바꾸기 동작: 바꿀 status 줄을 복사하고 해당 글의 GitHub 편집 화면을 엶. 토큰은 쓰지 않음 */ -}}
+        <script>
+          (function () {
+            var dialog = document.getElementById('status-dialog');
+            var link = document.getElementById('activity-add-link');
+            if (!dialog || !link) return;
+            var repo = link.getAttribute('data-repo');
+            var form = document.getElementById('status-form');
+            var lineBox = document.getElementById('status-line');
+            var result = document.getElementById('status-copy-result');
+            var editUrl = '';
+
+            document.querySelectorAll('.status-toggle').forEach(function (button) {
+              button.addEventListener('click', function () {
+                var next = button.getAttribute('data-next');
+                document.getElementById('status-dialog-name').textContent = button.getAttribute('data-title');
+                document.getElementById('status-dialog-from').textContent = button.getAttribute('data-status');
+                document.getElementById('status-dialog-to').textContent = next;
+                document.getElementById('status-dialog-josa').textContent = next === '완료' ? '로' : '으로';
+                lineBox.value = 'status: "' + next + '"';
+                result.textContent = '';
+                editUrl = repo + '/edit/main/site/content/' + button.getAttribute('data-path');
+                if (typeof dialog.showModal === 'function') {
+                  dialog.showModal();
+                  lineBox.select();
+                } else {
+                  window.open(editUrl, '_blank', 'noopener');
+                }
+              });
+            });
+
+            document.getElementById('status-cancel').addEventListener('click', function () { dialog.close(); });
+            dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
+
+            form.addEventListener('submit', function (event) {
+              event.preventDefault();
+              var done = function () { window.open(editUrl, '_blank', 'noopener'); dialog.close(); };
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(lineBox.value).then(done, function () {
+                  lineBox.select();
+                  result.textContent = '자동 복사가 안 돼서 줄을 선택해 두었습니다. Ctrl+C로 복사하세요.';
+                  window.open(editUrl, '_blank', 'noopener');
+                });
+              } else {
+                lineBox.select();
+                window.open(editUrl, '_blank', 'noopener');
+              }
             });
           })();
         </script>

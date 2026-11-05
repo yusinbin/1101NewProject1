@@ -874,3 +874,45 @@
     .af-submit { border: 1.5px solid #6d28d9; background: #6d28d9; color: #fff; }
   }
 }
+
+// 관리자용 상태 바꾸기 버튼 (카드 오른쪽 위)
+.activity-grid > li.activity-item { position: relative; }
+
+.status-toggle {
+  position: absolute;
+  top: .6rem;
+  right: .6rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: 2rem;
+  padding: .2rem .7rem;
+  border: 1px solid rgba(124, 58, 237, .35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .92);
+  color: #5b21b6;
+  font: inherit;
+  font-size: .75rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+
+  &:hover { background: #6d28d9; border-color: #6d28d9; color: #fff; }
+  &:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+
+  [theme=dark] & {
+    background: rgba(31, 31, 43, .92);
+    color: #c4b5fd;
+    border-color: rgba(167, 139, 250, .45);
+
+    &:hover { background: #7c3aed; color: #fff; }
+  }
+}
+
+.activity-form {
+  .status-from, .status-to { font-weight: 700; }
+  .status-to { color: #6d28d9; [theme=dark] & { color: #c4b5fd; } }
+  .status-steps { margin: .2rem 0 .4rem; padding-left: 1.3rem; font-size: .88rem; line-height: 1.7; }
+  input[readonly] { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+}
