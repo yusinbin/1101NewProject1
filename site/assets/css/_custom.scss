@@ -916,3 +916,71 @@
   .status-steps { margin: .2rem 0 .4rem; padding-left: 1.3rem; font-size: .88rem; line-height: 1.7; }
   input[readonly] { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 }
+
+// 활동 글 '이 글 수정하기' 버튼과 편집 창
+.post-edit {
+  display: flex;
+  justify-content: flex-end;
+  margin: -.4rem 0 .8rem;
+}
+
+.post-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 2.25rem;
+  padding: .3rem .9rem;
+  border: 1.5px solid rgba(124, 58, 237, .4);
+  border-radius: 999px;
+  background: transparent;
+  color: #5b21b6;
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  .post-edit-note { font-weight: 400; opacity: .75; }
+
+  &:hover { background: #6d28d9; border-color: #6d28d9; color: #fff; }
+  &:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+
+  [theme=dark] & {
+    color: #c4b5fd;
+    border-color: rgba(167, 139, 250, .45);
+
+    &:hover { background: #7c3aed; color: #fff; }
+  }
+}
+
+.activity-dialog.post-edit-dialog { width: min(56rem, calc(100vw - 2rem)); }
+
+.post-edit-dialog {
+  textarea {
+    min-height: 40vh;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: .85rem;
+    line-height: 1.55;
+    tab-size: 2;
+  }
+
+  kbd {
+    padding: 0 .3rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: .8em;
+  }
+
+  .post-edit-status { min-height: 1.2em; margin: .3rem 0 0; font-size: .85rem; color: #6d28d9; [theme=dark] & { color: #c4b5fd; } }
+
+  .activity-form-actions .af-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: .4rem .6rem;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: underline;
+
+    &:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+  }
+}
