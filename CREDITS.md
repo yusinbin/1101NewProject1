@@ -50,3 +50,4 @@
 | 사용자 스타일 | `site/assets/css/_custom.scss` | AI가 작성 / 홈 카드 배치 구상(직접 그린 스케치), 결과 검토 |
 | 사이트 설정 변경 | `site/hugo.toml` | AI와 함께 데모 설정 정리, 본인 정보로 교체 |
 | README, 이 문서 | `README.md`, `CREDITS.md` | AI가 초안 작성과 명령 동작 확인 / 내용 검토 |
+| 기능 검증표와 검증 캡처 | `VERIFICATION.md`, `verification/` (`shoot.js`, 캡처 12장) | AI가 확인 스크립트 작성·실행, 캡처와 표 작성 / 확인할 기능 선정, 결과 검토 |
