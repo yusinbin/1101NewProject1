@@ -32,9 +32,25 @@
     {{- with $profile.subtitle -}}
         <div class="home-subtitle">
             {{- if $profile.typeit -}}
+                {{- /* 문장은 항상 HTML에 넣어 둠: 스크립트가 없거나 늦어도, 움직임 줄이기 설정이어도 보이고 화면 읽기 프로그램도 읽음.
+                       타자 효과는 화면에만 보이는 장식(aria-hidden)으로 겹쳐 보여 줌 */ -}}
+                <span class="subtitle-text">{{ . | safeHTML }}</span>
                 {{- $id := dict "Content" . "Scratch" $.Scratch | partial "function/id.html" -}}
-                <div id="{{ $id }}" class="typeit"></div>
+                <div id="{{ $id }}" class="typeit" aria-hidden="true"></div>
                 {{- dict $id (slice $id) | dict "typeitMap" | merge ($.Scratch.Get "this") | $.Scratch.Set "this" -}}
+                <script>
+                  (function () {
+                    var root = document.documentElement;
+                    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                    root.classList.add('subtitle-anim');
+                    /* 3초가 지나도 타자 효과가 글자를 쓰지 못했으면(커서 | 만 있으면) 원래 문장을 다시 보여 줌 */
+                    setTimeout(function () {
+                      var typed = document.getElementById('{{ $id }}');
+                      var text = typed ? typed.textContent.replace(/\|/g, '').trim() : '';
+                      if (!text) root.classList.remove('subtitle-anim');
+                    }, 3000);
+                  })();
+                </script>
             {{- else -}}
                 {{- . | safeHTML -}}
             {{- end -}}
